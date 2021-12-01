@@ -1,0 +1,42 @@
+version: '3.7'
+services:
+
+  # Nginx server
+  nxinx_server:
+    container_name: nxinx_server
+    build:
+      context: .    
+      dockerfile: ./docker/nginx-server/Dockerfile
+    restart: always
+    ports:
+      - 8181:80
+    volumes:
+      - ./app:/var/www
+      - ./docker/nginx-server/etc/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - app-network
+    depends_on:
+      - php-server
+
+  # PHP server
+  php-server:
+    build:
+      context: .        
+      dockerfile: ./docker/php-server/Dockerfile
+    container_name: php-server
+    restart: always
+    tty: true
+    environment:
+      SERVICE_NAME: php
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./app:/var/www
+    networks:
+      - app-network
+
+# Networks
+networks:
+  app-network:
+    driver: bridge
+
