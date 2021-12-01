@@ -6,7 +6,9 @@ WORKDIR /var/www
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     git \
-    curl 
+    curl \
+    zip \
+    unzip 
     
 RUN apt-get update
 
