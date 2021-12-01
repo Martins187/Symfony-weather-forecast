@@ -1,3 +1,7 @@
-#index:
+# index:
 #    path: /
-#    controller: App\Controller\DefaultController::index
+#    controller: App\Controller\WeatherForecastController::index
+
+# delete:
+#    path: /delete
+#    controller: App\Controller\WeatherForecastController::deleteCache
