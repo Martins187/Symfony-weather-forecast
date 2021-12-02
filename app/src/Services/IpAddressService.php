@@ -5,10 +5,10 @@ namespace App\Services;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
 
-class IpAddressService extends CacheService
+class IpAddressService
 {
     protected $cache;
-    
+
     function __construct()
     {
         $this->cache = new FilesystemAdapter();

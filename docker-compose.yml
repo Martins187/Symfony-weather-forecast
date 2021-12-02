@@ -2,7 +2,7 @@ version: '3.7'
 services:
 
   # Nginx server
-  weather-forecast-ngnix-server:
+  weather-forecast-nginx-server:
     container_name: weather-forecast-nginx-server
     build:
       context: .    

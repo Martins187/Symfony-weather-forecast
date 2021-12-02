@@ -15,6 +15,5 @@ class ApiRequest
     function get(string $url) : CurlResponse
     {
        return $this->client->request('GET', $url);
-       
     }
 }
