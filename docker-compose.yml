@@ -2,8 +2,8 @@ version: '3.7'
 services:
 
   # Nginx server
-  nxinx_server:
-    container_name: nxinx_server
+  weather-forecast-ngnix-server:
+    container_name: weather-forecast-nginx-server
     build:
       context: .    
       dockerfile: ./docker/nginx-server/Dockerfile
@@ -19,11 +19,11 @@ services:
       - php-server
 
   # PHP server
-  php-server:
+  weather-forecast-php-server:
+    container_name: weather-forecast-php-server
     build:
       context: .        
       dockerfile: ./docker/php-server/Dockerfile
-    container_name: php-server
     restart: always
     tty: true
     environment:
