@@ -16,7 +16,7 @@ services:
     networks:
       - app-network
     depends_on:
-      - php-server
+      - weather-forecast-php-server
 
   # PHP server
   weather-forecast-php-server:
