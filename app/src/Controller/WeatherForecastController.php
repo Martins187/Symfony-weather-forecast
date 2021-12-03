@@ -24,12 +24,18 @@ class WeatherForecastController extends AbstractController
     /**
      * @Route("/", name="index", methods="GET")
      */
-    public function index(WeatherProviderInterface $weatherProvider): Response
+
+    public function index(): Response
+    // public function index(WeatherProviderInterface $weatherProvider): Response
     {
-        $ip = $this->ipAddressService->getIp();
-        $cityName = $this->locationService->getCityName($ip);
-        $weatherForecast = $this->weatherForecastService->getForecast($weatherProvider, $cityName);
-        return new Response($weatherForecast);
+        // $ip = $this->ipAddressService->getIp();
+        // $cityName = $this->locationService->getCityName($ip);
+        // $weatherForecast = $this->weatherForecastService->getForecast($weatherProvider, $cityName);
+        // return new Response($weatherForecast);
+
+        print_r($_SERVER);
+        // $request = Request::createFromGlobals();
+        return new Response($request->getClientIp());
     }
 
      /**
