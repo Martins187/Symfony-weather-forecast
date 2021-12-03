@@ -9,19 +9,15 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class IpAddressService
 {
-    protected $cache;
-    protected $client;
-
-    function __construct()
-    {
-        $this->cache = new FilesystemAdapter();
-        $this->client = HttpClient::create();
-    }
+    function __construct(
+        private FilesystemAdapter $cache,
+        private HttpClient $http
+    ){}
 
     function getIp(): string
     {
         return $this->cache->get('cached_ip', function (ItemInterface $item) {
-            return $this->client->request('GET', 'https://ip.seeip.org')->getContent();
+            return $this->http->request('GET', 'https://ip.seeip.org')->getContent();
         });
     }
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\WeatherForecastProviders\WeatherProviderInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\WeatherForecastService;
@@ -22,7 +23,7 @@ class WeatherForecastController extends AbstractController
     /**
      * @Route("/", name="index", methods="GET")
      */
-    public function index(WeatherProviderInterface $weatherProvider): Response
+    public function index(): Response
     {
         $ip = $this->ipAddressService->getIp();
         $cityName = $this->locationService->getCityName($ip);
@@ -34,10 +35,10 @@ class WeatherForecastController extends AbstractController
      /**
      * @Route("/renewData", name="renewForecastData", methods="GET")
      */
-    public function renewForecastData() : Response
+    public function renewForecastData() : RedirectResponse
     {
         $this->ipAddressService->clearCachedIp();
         $this->locationService->clearCachedCityName();
-        return $this->index();
+        return $this->redirectToRoute('index');
     }
 }

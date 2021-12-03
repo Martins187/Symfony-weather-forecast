@@ -3,23 +3,21 @@
 namespace App\Service;
 
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\Cache\ItemInterface;
 
 class LocationService
 {
-    protected $cache;
-    protected $client;
-
-    function __construct()
-    {
-        $this->cache = new FilesystemAdapter();
-        $this->client = HttpClient::create();
-    }
+    function __construct(
+        private FilesystemAdapter $cache,
+        private HttpClient $http
+    ){}
 
     function getLocationData(string $ip): array
     {
-       return $this->client->request('GET', 'http://api.ipstack.com/'.$ip.'?access_key='.$_ENV['IPSTACK_KEY'])->toArray();
+       return $this->http->request('GET', 'http://api.ipstack.com/'
+       .$ip.'?access_key='.$_ENV['IPSTACK_KEY'])->toArray();
     }
 
     function getCityName(string $ip): string
@@ -30,8 +28,9 @@ class LocationService
         });
     }
 
-    function clearCachedCityName()
+    function clearCachedCityName(): Response
     {
         $this->cache->deleteItem('cached_city_name');
+        return new Response();
     }
 }
