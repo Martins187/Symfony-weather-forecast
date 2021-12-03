@@ -14,13 +14,15 @@ class LocationService
         private HttpClient $http
     ){}
 
-    function getLocationData(string $ip): array
+    public function getLocationData(string $ip): array
     {
-       return $this->http->request('GET', 'http://api.ipstack.com/'
-       .$ip.'?access_key='.$_ENV['IPSTACK_KEY'])->toArray();
+        return $this->http->request(
+            'GET', 
+            'http://api.ipstack.com/' . $ip .
+            '?access_key='. $_ENV['IPSTACK_KEY'])->toArray();
     }
 
-    function getCityName(string $ip): string
+    public function getCityName(string $ip): string
     {
         return $this->cache->get('cached_city_name', function (ItemInterface $item) use ($ip){
             $response = $this->getLocationData($ip);
@@ -28,7 +30,7 @@ class LocationService
         });
     }
 
-    function clearCachedCityName(): Response
+    public function clearCachedCityName(): Response
     {
         $this->cache->deleteItem('cached_city_name');
         return new Response();

@@ -7,7 +7,7 @@ use Symfony\Component\HttpClient\HttpClient;
 
 class WeatherForecastService
 {
-    function getForecast(WeatherProviderInterface $weatherProvider, string $city): string
+    public function getForecast(WeatherProviderInterface $weatherProvider, string $city): string
     {
         return $weatherProvider->getForecast($city);
     }
