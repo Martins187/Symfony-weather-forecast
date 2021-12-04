@@ -2,17 +2,19 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpClient\Response\CurlResponse;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\Cache\ItemInterface;
 
 class IpAddressService
 {
-    public function __construct(
-        private FilesystemAdapter $cache,
-        private HttpClient $http
-    ){}
+    private $cache;
+    private $http;
+
+    public function __construct(){
+        $this->cache = new FilesystemAdapter;
+        $this->http = HttpClient::create();
+    }
 
     public function getIp(): string
     {

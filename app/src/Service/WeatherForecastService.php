@@ -2,13 +2,23 @@
 
 namespace App\Service;
 
-use App\WeatherForecastProviders\WeatherProviderInterface;
 use Symfony\Component\HttpClient\HttpClient;
 
 class WeatherForecastService
 {
-    public function getForecast(WeatherProviderInterface $weatherProvider, string $city): string
-    {
-        return $weatherProvider->getForecast($city);
+    private $http;
+
+    public function __construct(){
+        $this->http = HttpClient::create();
     }
+
+    public function getForecast(string $city): string
+    {
+        return $this->http->request(
+            'GET', 
+            'https://api.openweathermap.org/data/2.5/weather?q=' . $city .
+            '&exclude=minutely,hourly,daily,alerts&appid=' . $_ENV['OPENWEATHERMAP_KEY']
+        )->getContent();
+    }
+    
 }

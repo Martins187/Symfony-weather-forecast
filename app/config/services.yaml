@@ -24,9 +24,8 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
         
-    # App\Controller\WeatherForecastController:
-    #     arguments:
-    #         $weatherProvider: '@App\WeatherForecastProviders\%weatherForecastProvider%'
+    App\Service\WeatherProvider\WeatherProviderInterface:
+        factory: ['@App\Service\WeatherProvider\WeatherProviderFactory', 'create']
 
 
     # add more service definitions when explicit configuration is needed

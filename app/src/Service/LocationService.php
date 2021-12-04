@@ -9,17 +9,21 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class LocationService
 {
-    function __construct(
-        private FilesystemAdapter $cache,
-        private HttpClient $http
-    ){}
+    private $cache;
+    private $http;
+
+    public function __construct(){
+        $this->cache = new FilesystemAdapter;
+        $this->http = HttpClient::create();
+    }
 
     public function getLocationData(string $ip): array
     {
         return $this->http->request(
             'GET', 
             'http://api.ipstack.com/' . $ip .
-            '?access_key='. $_ENV['IPSTACK_KEY'])->toArray();
+            '?access_key=' . $_ENV['IPSTACK_KEY']
+        )->toArray();
     }
 
     public function getCityName(string $ip): string
